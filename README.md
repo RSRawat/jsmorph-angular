@@ -1,2 +1,2 @@
 ### jsMorph Angular
-jQuery like animation methods for angular elemnts using jsMorph animation framework.
+jQuery like animation methods for angular elements using jsMorph animation framework.
