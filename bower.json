@@ -1,27 +1,27 @@
 {
-  "name": "jsMorph-angular",
-  "main": "jsMorph-angular.js",
-  "version": "0.0.1",
-  "homepage": "https://github.com/RSRawat/jsMorph-angular",
-  "description": "jQuery like animation methods for angular elements",
-  "keywords": [
-    "jsMorph",
-    "jsMorph-angular",
-    "javascript-animation",
-    "angular-animation",
-    "animation",
-    "angular",
-    "javascript"
-  ],
-  "authors": [
-    "RSR (Ravinder Singh Rawat)"
-  ],
-  "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ]
+    "name": "jsMorph-angular",
+    "main": "jsMorph-angular.js",
+    "version": "0.0.2",
+    "homepage": "https://github.com/RSRawat/jsMorph-angular",
+    "description": "jQuery like animation methods for angular elements",
+    "keywords": [
+        "jsMorph",
+        "jsMorph-angular",
+        "javascript-animation",
+        "angular-animation",
+        "animation",
+        "angular",
+        "javascript"
+    ],
+    "authors": [
+        "RSR (Ravinder Singh Rawat)"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
 }
