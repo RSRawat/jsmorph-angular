@@ -1,0 +1,44 @@
+.jabong-slider {
+  width: 736px;
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+.jabong-slider .inner-slides {
+  position: relative;
+  width: 736px;
+  background: #ddd;
+  overflow: hidden;
+  float: left;
+}
+.jabong-slider .inner-slides ul {
+  position: relative;
+  width: 9999999px;
+  left: 0;
+  top: 0;
+  list-style-type: none;
+  padding: 0;
+}
+.jabong-slider .inner-slides li {
+  width: 184px;
+  float: left;
+}
+.jabong-slider .inner-slides li img {
+  width: 100%;
+}
+.jabong-slider button.disabled {
+  background: rgb(243, 243, 243);
+  border: rgb(216, 216, 216) 1px solid;
+  color: #ddd;
+}
+.jabong-slider .pagination span {
+  background: #000;
+  padding: 0 5px;
+  margin: 2px;
+}
+.jabong-slider .pagination span.active {
+  background: #ff0000;
+}
+button.prev {
+  background: #000;
+  color: #ff0000;
+}

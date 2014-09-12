@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Jsmorph</title>
+	<style>
+		#main, #main2, #main3 {
+			position: relative;
+			width: 200px;
+			height: 200px;
+			background-color: red;
+			display: none;
+		}
+		#main2 {
+			opacity: 0;
+			filter: alpha(opacity=0);
+			display: inline-block;
+		}
+		#main3 {
+			opacity: 0;
+		}
+	</style>
+	<link rel="stylesheet" href="css/bootstrap.css">
+
+	<script src="js/vendor/html5shiv.min.js"></script>
+	<script src="../dist/jsMorph-0.5.0.js"></script>
+	<script src="js/vendor/angular/angular.js"></script>
+	<script src="js/vendor/angular-touch/angular-touch.js"></script>
+	<script src="../dist/jsMorph-angular.js"></script>
+	<script src="../dist/jsMorph-angular-carousel.js"></script>
+</head>
+<body>
+	<!-- <section class="jabong-slider" carousel="carouselOptions">
+		<div class="inner-slides">
+			<ul>
+				<li><img ng-src="img/Chrysanthemum.jpg" src="img/Chrysanthemum.jpg"></li>
+				<li><img ng-src="img/Desert.jpg" src="img/Desert.jpg"></li>
+				<li><img ng-src="img/Hydrangeas.jpg" src="img/Hydrangeas.jpg"></li>
+				<li><img ng-src="img/Jellyfish.jpg" src="img/Jellyfish.jpg"></li>
+				<li><img ng-src="img/Koala.jpg" src="img/Koala.jpg"></li>
+				<li><img ng-src="img/Lighthouse.jpg" src="img/Lighthouse.jpg"></li>
+				<li><img ng-src="img/Penguins.jpg" src="img/Penguins.jpg"></li>
+				<li><img ng-src="img/Tulips.jpg" src="img/Tulips.jpg"></li>
+			</ul>
+		</div>
+		<section>
+			<button ng-show="options.nextPrevButton" ng-click="prev()">
+				Prev
+			</button>
+			<div class="pagination"></div>
+			<button ng-show="options.nextPrevButton" ng-click="next()">
+				Next
+			</button>
+		</section>
+	</section> -->
+
+	<div class="container">
+		<!-- <div test><h2>{{name()}}</h2></div> -->
+		<div ng-controller="carouselCtrl">
+			<section class="jabong-slider" carousel="carouselOptions" watch="slides">
+				<div class="inner-slides" ng-swipe-left="next()" ng-swipe-right="prev()">
+					<ul>
+						<li slide ng-repeat="slide in slides">{{slide.heading}}<img ng-src="{{slide.img}}" ></li>
+						<!-- <li><img ng-src="img/Chrysanthemum.jpg" src="img/Chrysanthemum.jpg"></li>
+						<li><img ng-src="img/Desert.jpg" src="img/Desert.jpg"></li>
+						<li><img ng-src="img/Hydrangeas.jpg" src="img/Hydrangeas.jpg"></li>
+						<li><img ng-src="img/Jellyfish.jpg" src="img/Jellyfish.jpg"></li>
+						<li><img ng-src="img/Koala.jpg" src="img/Koala.jpg"></li>
+						<li><img ng-src="img/Lighthouse.jpg" src="img/Lighthouse.jpg"></li>
+						<li><img ng-src="img/Penguins.jpg" src="img/Penguins.jpg"></li>
+						<li><img ng-src="img/Tulips.jpg" src="img/Tulips.jpg"></li> -->
+					</ul>
+				</div>
+				<section>
+					<button ng-show="options.nextPrevButton" ng-click="prev()">
+						Prev
+					</button>
+					<div class="pagination"></div>
+					<button ng-show="options.nextPrevButton" ng-click="next()">
+						Next
+					</button>
+				</section>
+				<!-- <div slide ng-repeat="slide in slides"><img ng-src="{{slide.img}}" ></div> -->
+				<!-- <div slide heading="{{slide.heading}}" ng-repeat="slide in slides">
+					<img ng-src="{{slide.img}}">
+				</div> -->
+			</section>
+			<button ng-click="add()">Add new slide</button>
+		</div>
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<button onclick="slideDown()">SlideDown</button>
+	<button onclick="slideUp()">SlideUp</button>
+	<button onclick="fadeIn()">fadeIn</button>
+	<button onclick="fadeOut()">fadeOut</button>
+	<button onclick="show()">show</button>
+	<button onclick="hide()">hide</button>
+
+	<div class="main" id="main">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	consequat.</div>
+	<div class="main" id="main2">Main 2</div>
+	<div class="main" id="main3">Main 3</div>
+</body>
+
+<script>
+	var app = angular.module('jabong', ['ngTouch', 'jabong.carousel']);
+
+	app.controller('carouselCtrl', ['$scope', function($scope){
+		$scope.carouselOptions = {
+			nextPrevButton: true,
+			itemPerSlide: 4,
+			pagination: true,
+	        numberPagination: false,
+	        threshold: 75,
+	        delay: 200,
+	        fadeAnimation: false,
+	        type: 'circular', // circular, nonCircular
+	        onSlideStart: function() {},
+	        onSlideComplete: function() {}
+		};
+
+		$scope.add = function() {
+			$scope.slides.unshift({
+				heading: 'Slide 9',
+				img: 'img/Chrysanthemum.jpg',
+				description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+			});
+		};
+
+		$scope.slides = [{
+			heading: 'Slide 1',
+			img: 'img/Chrysanthemum.jpg',
+			description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+		}, {
+			heading: 'Slide 2',
+			img: 'img/Desert.jpg',
+			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+		}, {
+			heading: 'Slide 3',
+			img: 'img/Hydrangeas.jpg',
+			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+		}, {
+			heading: 'Slide 4',
+			img: 'img/Jellyfish.jpg',
+			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+		}, {
+			heading: 'Slide 5',
+			img: 'img/Koala.jpg',
+			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+		}, {
+			heading: 'Slide 6',
+			img: 'img/Lighthouse.jpg',
+			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+		}, {
+			heading: 'Slide 7',
+			img: 'img/Penguins.jpg',
+			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+		}, {
+			heading: 'Slide 8',
+			img: 'img/Tulips.jpg',
+			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+		}];
+	}]);
+
+	angular.bootstrap(document, ['jabong']);
+
+	function slideDown() {
+		var elm = angular.element(document.getElementById('main'));
+		elm.slideDown({
+			motion: {
+				duration: 1500
+			},
+			done: function(obj, time, frames, objSpeed, jsMorphSpeed, objCssText) {
+				console.log('slidedown done');
+			}
+		});
+	}
+
+	function slideUp() {
+		var elm = angular.element(document.getElementById('main'));
+		elm.slideUp({
+			done: function(obj) {
+				console.log('slideup done');
+				console.log(obj);
+			}
+		});
+	}
+
+	function fadeIn() {
+		var elm = angular.element(document.getElementById('main'));
+
+		elm.fadeIn({
+			done: function(obj) {
+				console.log('fadeIn end', obj);
+			}
+		});
+	}
+
+	function fadeOut() {
+		var elm = angular.element(document.getElementById('main'));
+
+		elm.fadeOut({
+			done: function(obj) {
+				console.log('fadeOut end', obj);
+			}
+		});
+	}
+
+	function show() {
+		var elm = angular.element(document.getElementById('main'));
+
+		elm.show({
+			done: function(obj) {
+				console.log('show end', obj);
+			}
+		});
+	}
+
+	function hide() {
+		var elm = angular.element(document.getElementById('main'));
+
+		elm.hide({
+			done: function(obj) {
+				console.log('hide end', obj);
+			}
+		});
+	}
+
+	/*angular.element(document.getElementById('main')).animate({
+		left: '200px',
+		width: '400px',
+		height: '500px',
+		opacity: 0.5,
+		'font-size': '50px'
+	}, {
+		motion: {
+			duration: 1500
+		},
+		done: function() {
+			console.log('animation completed!');
+		}
+	});*/
+
+	/*var elm = angular.element(document.getElementById('main'));
+
+	elm.slideDown({
+		done: function(obj, time, frames, objSpeed, jsMorphSpeed, objCssText) {
+			console.log(obj);
+			elm.slideUp({
+				done: function() {
+					console.log('slideup done');
+				}
+			});
+		}
+	});*/
+
+	/*function slideDown(elm) {
+		var elm = document.getElementById(elm),
+			elmHeight = 0;
+
+		elm.style.display = 'inherit';
+		elmHeight = elm.offsetHeight;
+		elm.style.height = 0;
+
+		new jsMorph(elm, {
+			height: elmHeight + 'px'
+		}).start();
+	}
+
+	function slideUp(elm) {
+		var elm = document.getElementById(elm);
+
+		elm.style.overflow = 'hidden';
+		
+		new jsMorph(elm, {
+			height: 0 + 'px'
+		}, null, null, null, null, function() {
+			elm.style.display = 'none';
+			elm.style.height = null;
+		}).start();
+	}
+
+	function fadeIn(elm) {
+		var elm = document.getElementById(elm);
+
+		elm.style.opacity = 0;
+
+		new jsMorph(elm, {
+			opacity: 1
+		}, null, null, null, function (obj, objStyle, time, frames, objSpeed, jsMorphSpeed, easeingFunction, objCssText) {
+			obj.style.filter = 'alpha(opacity=' + (easeingFunction * 100) + ')';
+		}).start();
+	}
+
+	function fadeOut(elm) {
+		var elm = document.getElementById(elm);
+
+		new jsMorph(elm, {
+			opacity: 0
+		}, null, null, null, function (obj, objStyle, time, frames, objSpeed, jsMorphSpeed, easeingFunction, objCssText) {
+			obj.style.filter = 'alpha(opacity=' + (100 - (easeingFunction*100)) + ')';
+		}).start();
+	}
+
+	function show(elm, speed) {
+		var elm = document.getElementById(elm),
+			elmWidth = 0,
+			elmHeight = 0,
+			duration = 600;
+
+		if(!speed) {
+			elm.style.display = 'inherit';
+			elm.style.opacity = 1;
+		} else {
+			if(typeof speed === 'string') {
+				if(speed === 'slow') {
+					duration = 1500;
+				} else if(speed === 'medium') {
+					duration = 900;
+				} else if(speed === 'fast') {
+					duration = 400;
+				}
+			} else if(typeof speed === 'number') {
+				duration = speed;
+			}
+
+			elm.style.display = 'inherit';
+			elmWidth = elm.offsetWidth;
+			elmHeight = elm.offsetHeight;
+
+			elm.style.height = 0;
+			elm.style.width = 0;
+			elm.style.opacity = 0;
+
+			new jsMorph(elm, {
+				width: elmWidth + 'px',
+				height: elmHeight + 'px',
+				opacity: 1
+			}, {
+				duration: duration
+			}, null, null, function (obj, objStyle, time, frames, objSpeed, jsMorphSpeed, easeingFunction, objCssText) {
+				obj.style.filter = 'alpha(opacity=' + (easeingFunction * 100) + ')';
+			}).start();
+		}
+	}
+
+	function hide(elm, speed) {
+		var elm = document.getElementById(elm),
+			duration = 600;
+
+		if(!speed) {
+			elm.style.display = 'none';
+			elm.style.opacity = 1;
+		} else {
+			if(typeof speed === 'string') {
+				if(speed === 'slow') {
+					duration = 1500;
+				} else if(speed === 'medium') {
+					duration = 900;
+				} else if(speed === 'fast') {
+					duration = 400;
+				}
+			} else if(typeof speed === 'number') {
+				duration = speed;
+			}
+
+			elm.style.display = 'inherit';
+			elm.style.opacity = 1;
+			elm.style.overflow = 'hidden';
+
+			new jsMorph(elm, {
+				width: 0 + 'px',
+				height: 0 + 'px',
+				opacity: 0
+			}, {
+				duration: duration
+			}, null, null, function (obj, objStyle, time, frames, objSpeed, jsMorphSpeed, easeingFunction, objCssText) {
+				obj.style.filter = 'alpha(opacity=' + (100 - (easeingFunction*100)) + ')';
+			}, function(obj, objStyle, time, frames, objSpeed, jsMorphSpeed, easeingFunction, objCssText) {
+				obj.style.width = null;
+				obj.style.height = null;
+			}).start();
+		}
+	}*/
+
+</script>
+
+</html>

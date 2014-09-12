@@ -196,7 +196,6 @@
                         }
 
                         function adjustSlides(start, howmany) {
-                            console.log('adjustSlides');
                             var elm = null,
                                 newelm = null,
                                 elmScope = null;
