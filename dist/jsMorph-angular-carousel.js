@@ -74,7 +74,7 @@
                             var count = 0;
 
                             if ($scope.options.pagination) {
-                                paginationCount = Math.round(slidesLength / $scope.options.itemPerSlide);
+                                paginationCount = Math.ceil(slidesLength / $scope.options.itemPerSlide);
 
                                 if ($scope.options.numberPagination) {
                                     $pagination.show().html((currentSlide + 1) + '/' + paginationCount);
