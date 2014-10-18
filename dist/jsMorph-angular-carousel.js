@@ -157,7 +157,11 @@
                                 $li = $slides.find('li');
                                 $pagination = $element.find('section').find('div').eq(0);
                                 slidesLength = $li.length;
-                                slideWidth = $li[0].offsetWidth;
+
+                                if (slidesLength > 0) {
+                                    slideWidth = $li[0].offsetWidth;
+                                }
+
                                 scrollWidth = $scope.options.itemPerSlide * slideWidth;
 
                                 $li.removeAttr('style');
