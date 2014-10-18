@@ -59,7 +59,7 @@
 			<section class="jabong-slider" carousel="carouselOptions" watch="slides">
 				<div class="inner-slides" ng-swipe-left="next()" ng-swipe-right="prev()">
 					<ul>
-						<li slide ng-repeat="slide in slides">{{slide.heading}}<img ng-src="{{slide.img}}" ></li>
+						<li slide ng-repeat="slide in slides" ng-click="showMessage(slide.heading)">{{slide.heading}}<img ng-src="{{slide.img}}" ></li>
 						<!-- <li><img ng-src="img/Chrysanthemum.jpg" src="img/Chrysanthemum.jpg"></li>
 						<li><img ng-src="img/Desert.jpg" src="img/Desert.jpg"></li>
 						<li><img ng-src="img/Hydrangeas.jpg" src="img/Hydrangeas.jpg"></li>
@@ -127,6 +127,10 @@
 				img: 'img/Chrysanthemum.jpg',
 				description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
 			});
+		};
+
+		$scope.showMessage = function(heading) {
+			console.log(heading);
 		};
 
 		$scope.slides = [{

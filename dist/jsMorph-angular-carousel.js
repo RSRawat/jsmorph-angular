@@ -204,24 +204,36 @@
                                 newelm = null,
                                 elmScope = null;
 
+                            //console.log($scope.$new());
+
                             for (var i = 1; i <= howmany; i++) {
                                 elm = $slides.find('li').eq(start);
                                 elmScope = elm.scope();
-                                newelm = elm.clone().addClass('clone');
+                                newelm = elm.clone().addClass('clone').removeAttr('ng-repeat');
+                                newelm = $compile(newelm[0])(elmScope);
 
-                                elm.remove();
                                 $slides.append(newelm);
+                                elm.remove();
                             }
                         };
 
                         $scope.next = function() {
+                            var elm = null,
+                                elmScope = null,
+                                newelm = null;
+
                             if (!$scope.isSlideAnimating) {
                                 $scope.isSlideAnimating = true;
 
                                 if (!$scope.options.fadeAnimation) {
                                     if (remainingSlides >= 1) {
                                         for (var i = 0; i < remainingSlides; i++) {
-                                            $slides.append($slides.find('li').eq(i).clone(true));
+                                            elm = $slides.find('li').eq(i),
+                                            elmScope = elm.scope(),
+                                            newelm = elm.clone(true).removeAttr('ng-repeat');
+
+                                            newelm = $compile(newelm[0])(elmScope);
+                                            $slides.append(newelm);
                                         }
 
                                         $slides.css('width', (slidesLength + remainingSlides + 1) * slideWidth);
@@ -253,12 +265,22 @@
                         };
 
                         $scope.prev = function() {
+                            var elm = null,
+                                elmScope = null,
+                                newelm = null;
+
                             if (!$scope.isSlideAnimating) {
                                 $scope.isSlideAnimating = true;
 
                                 if (!$scope.options.fadeAnimation) {
                                     for (var i = 1; i <= $scope.options.itemPerSlide; i++) {
-                                        $slides.prepend($slides.find('li').eq(slidesLength - 1).clone(true));
+                                        elm = $slides.find('li').eq(slidesLength - 1),
+                                        elmScope = elm.scope(),
+                                        newelm = elm.clone(true).removeAttr('ng-repeat');
+
+                                        newelm = $compile(newelm[0])(elmScope);
+
+                                        $slides.prepend(newelm);
                                     }
 
                                     $slides.css({
