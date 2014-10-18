@@ -222,7 +222,7 @@
                                 elmScope = null,
                                 newelm = null;
 
-                            if (!$scope.isSlideAnimating) {
+                            if (!$scope.isSlideAnimating && slidesLength > $scope.options.itemPerSlide) {
                                 $scope.isSlideAnimating = true;
 
                                 if (!$scope.options.fadeAnimation) {
@@ -269,7 +269,7 @@
                                 elmScope = null,
                                 newelm = null;
 
-                            if (!$scope.isSlideAnimating) {
+                            if (!$scope.isSlideAnimating && slidesLength > $scope.options.itemPerSlide) {
                                 $scope.isSlideAnimating = true;
 
                                 if (!$scope.options.fadeAnimation) {
