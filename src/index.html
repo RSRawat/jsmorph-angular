@@ -56,18 +56,20 @@
 	<div class="container">
 		<!-- <div test><h2>{{name()}}</h2></div> -->
 		<div ng-controller="carouselCtrl">
-			<section class="jabong-slider" carousel="carouselOptions" watch="slides">
+			{{slides}}
+			<div id="mycarousel"></div>
+			<!-- <section class="jabong-slider" carousel="carouselOptions" watch="slides">
 				<div class="inner-slides" ng-swipe-left="next()" ng-swipe-right="prev()">
 					<ul>
-						<li slide ng-repeat="slide in slides" ng-click="showMessage(slide.heading)">{{slide.heading}}<img ng-src="{{slide.img}}" ></li>
-						<!-- <li><img ng-src="img/Chrysanthemum.jpg" src="img/Chrysanthemum.jpg"></li>
-						<li><img ng-src="img/Desert.jpg" src="img/Desert.jpg"></li>
-						<li><img ng-src="img/Hydrangeas.jpg" src="img/Hydrangeas.jpg"></li>
-						<li><img ng-src="img/Jellyfish.jpg" src="img/Jellyfish.jpg"></li>
-						<li><img ng-src="img/Koala.jpg" src="img/Koala.jpg"></li>
-						<li><img ng-src="img/Lighthouse.jpg" src="img/Lighthouse.jpg"></li>
-						<li><img ng-src="img/Penguins.jpg" src="img/Penguins.jpg"></li>
-						<li><img ng-src="img/Tulips.jpg" src="img/Tulips.jpg"></li> -->
+						<li slide ng-repeat="slide in slides" ng-click="showMessage(slide.heading)">
+							{{slide.heading}}
+							<select
+					                		ng-model="slide.sizes.selected"
+					                		ng-options="size.value as size.type for size in slide.sizes.options">
+					                	</select>
+					                	{{slide.sizes.selected}}
+							<img ng-src="{{slide.img}}" >
+						</li>
 					</ul>
 				</div>
 				<section>
@@ -79,11 +81,7 @@
 						Next
 					</button>
 				</section>
-				<!-- <div slide ng-repeat="slide in slides"><img ng-src="{{slide.img}}" ></div> -->
-				<!-- <div slide heading="{{slide.heading}}" ng-repeat="slide in slides">
-					<img ng-src="{{slide.img}}">
-				</div> -->
-			</section>
+			</section> -->
 			<button ng-click="add()">Add new slide</button>
 		</div>
 	</div>
@@ -107,7 +105,42 @@
 <script>
 	var app = angular.module('jabong', ['ngTouch', 'jabong.carousel']);
 
-	app.controller('carouselCtrl', ['$scope', function($scope){
+	app.run(function($templateCache) {
+		$templateCache.put('carousel.html', '<section class="jabong-slider" carousel="carouselOptions" watch="slides">\
+				<div class="inner-slides" ng-swipe-left="next()" ng-swipe-right="prev()">\
+					<ul>\
+						<li slide ng-repeat="slide in slides" ng-click="showMessage(slide.heading)">\
+							{{slide.heading}}\
+							<select\
+		                		ng-model="slide.sizes.selected"\
+		                		ng-options="size.value as size.type for size in slide.sizes.options">\
+		                	</select>\
+		                	<span ng-bind="{{slide.sizes.selected}}"></span>\
+							<img ng-src="{{slide.img}}" >\
+						</li>\
+					</ul>\
+				</div>\
+				<section>\
+					<button ng-show="options.nextPrevButton" ng-click="prev()">\
+						Prev\
+					</button>\
+					<div class="pagination"></div>\
+					<button ng-show="options.nextPrevButton" ng-click="next()">\
+						Next\
+					</button>\
+				</section>\
+			</section>');
+	});
+
+	app.controller('carouselCtrl', ['$scope', '$templateCache', '$compile', function($scope, $templateCache, $compile){
+
+		$scope.addCarousel = function() {
+			var html = $compile($templateCache.get('carousel.html'))($scope);
+			angular.element(document.getElementById('mycarousel')).html('').append(html);
+		};
+
+		$scope.addCarousel();
+
 		$scope.carouselOptions = {
 			nextPrevButton: true,
 			itemPerSlide: 4,
@@ -125,8 +158,20 @@
 			$scope.slides.unshift({
 				heading: 'Slide 9',
 				img: 'img/Chrysanthemum.jpg',
-				description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+				description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+				sizes: {selected: 'b',options: [{
+					type: 'A',
+					value: 'a'
+				}, {
+					type: 'B',
+					value: 'b'
+				}, {
+					type: 'C',
+					value: 'c'
+				}]}
 			});
+
+			$scope.addCarousel();
 		};
 
 		$scope.showMessage = function(heading) {
@@ -136,24 +181,74 @@
 		$scope.slides = [{
 			heading: 'Slide 1',
 			img: 'img/Chrysanthemum.jpg',
-			description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+			description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+			sizes: {selected: 'b',options: [{
+				type: 'A',
+				value: 'a'
+			}, {
+				type: 'B',
+				value: 'b'
+			}, {
+				type: 'C',
+				value: 'c'
+			}]}
 		}, {
 			heading: 'Slide 2',
 			img: 'img/Desert.jpg',
-			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+			sizes: {selected: 'b',options: [{
+				type: 'A',
+				value: 'a'
+			}, {
+				type: 'B',
+				value: 'b'
+			}, {
+				type: 'C',
+				value: 'c'
+			}]}
 		}, {
 			heading: 'Slide 3',
 			img: 'img/Hydrangeas.jpg',
-			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-		}/*, {
+			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+			sizes: {selected: 'b',options: [{
+				type: 'A',
+				value: 'a'
+			}, {
+				type: 'B',
+				value: 'b'
+			}, {
+				type: 'C',
+				value: 'c'
+			}]}
+		}, {
 			heading: 'Slide 4',
 			img: 'img/Jellyfish.jpg',
-			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+			sizes: {selected: 'b',options: [{
+				type: 'A',
+				value: 'a'
+			}, {
+				type: 'B',
+				value: 'b'
+			}, {
+				type: 'C',
+				value: 'c'
+			}]}
 		}, {
 			heading: 'Slide 5',
 			img: 'img/Koala.jpg',
-			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-		}*/];
+			description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+			sizes: {selected: 'b',options: [{
+				type: 'A',
+				value: 'a'
+			}, {
+				type: 'B',
+				value: 'b'
+			}, {
+				type: 'C',
+				value: 'c'
+			}]}
+		}];
 	}]);
 
 	angular.bootstrap(document, ['jabong']);

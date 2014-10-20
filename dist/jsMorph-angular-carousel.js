@@ -11,6 +11,18 @@
     }
 
 }(typeof window !== undefined ? window : this, function() {
+    function getElementsByClassName(cn, rootNode) {
+        if (!rootNode) {
+            rootNode = document;
+        }
+        for (var r = [], e = rootNode.getElementsByTagName('*'), i = e.length; i--;) {
+            if ((' ' + e[i].className + ' ').indexOf(' ' + cn + ' ') > -1) {
+                r.push(e[i]);
+            }
+        }
+        return r;
+    }
+
     angular.module('jabong.carousel', [])
         .directive('carousel', ['$compile', '$timeout', '$q', '$log',
             function($compile, $timeout, $q, $log) {
@@ -35,16 +47,9 @@
                                 onSlideComplete: function() {}
                             };
 
+                            $scope.firstTime = true;
                             $scope.options = angular.extend({}, defaults, $scope.carousel);
                             $scope.isSlideAnimating = false;
-
-                            if ($scope.watch) {
-                                $scope.$watch('watch', function(newVal, oldVal) {
-                                    $scope.init();
-                                }, true);
-                            } else {
-                                $scope.init();
-                            }
                         }
                     ],
                     link: function($scope, $element, attrs, controller, transclude) {
@@ -138,18 +143,6 @@
                             }
                         };
 
-                        function getElementsByClassName(cn, rootNode) {
-                            if (!rootNode) {
-                                rootNode = document;
-                            }
-                            for (var r = [], e = rootNode.getElementsByTagName('*'), i = e.length; i--;) {
-                                if ((' ' + e[i].className + ' ').indexOf(' ' + cn + ' ') > -1) {
-                                    r.push(e[i]);
-                                }
-                            }
-                            return r;
-                        }
-
                         $scope.init = function() {
                             $timeout(function() {
                                 angular.element(getElementsByClassName('clone', $element[0])).remove();
@@ -157,11 +150,7 @@
                                 $li = $slides.find('li');
                                 $pagination = $element.find('section').find('div').eq(0);
                                 slidesLength = $li.length;
-
-                                if (slidesLength > 0) {
-                                    slideWidth = $li[0].offsetWidth;
-                                }
-
+                                slideWidth = slidesLength > 0 ? $li[0].offsetWidth : 0;
                                 scrollWidth = $scope.options.itemPerSlide * slideWidth;
 
                                 $li.removeAttr('style');
@@ -169,6 +158,8 @@
                                 setRemainingSlides();
                                 addPagination();
                                 bindEvents();
+
+                                $scope.firstTime = false;
                             }, 0);
                         };
 
@@ -204,8 +195,6 @@
                                 newelm = null,
                                 elmScope = null;
 
-                            //console.log($scope.$new());
-
                             for (var i = 1; i <= howmany; i++) {
                                 elm = $slides.find('li').eq(start);
                                 elmScope = elm.scope();
@@ -230,8 +219,7 @@
                                         for (var i = 0; i < remainingSlides; i++) {
                                             elm = $slides.find('li').eq(i),
                                             elmScope = elm.scope(),
-                                            newelm = elm.clone(true).removeAttr('ng-repeat');
-
+                                            newelm = elm.clone().removeAttr('ng-repeat');
                                             newelm = $compile(newelm[0])(elmScope);
                                             $slides.append(newelm);
                                         }
@@ -276,7 +264,7 @@
                                     for (var i = 1; i <= $scope.options.itemPerSlide; i++) {
                                         elm = $slides.find('li').eq(slidesLength - 1),
                                         elmScope = elm.scope(),
-                                        newelm = elm.clone(true).removeAttr('ng-repeat');
+                                        newelm = elm.clone().removeAttr('ng-repeat');
 
                                         newelm = $compile(newelm[0])(elmScope);
 
@@ -307,10 +295,13 @@
                                 });
                             }
                         };
+
+
+                        $scope.init();
                     },
                     transclude: true,
-                    replace: true,
-                    template: '<section class="jabong-slider"></section>'
+                    replace: true
+                    //template: '<section class="jabong-slider"></section>'
                 };
             }
         ]);
